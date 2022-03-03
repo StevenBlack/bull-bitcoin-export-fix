@@ -31,7 +31,7 @@ struct Record {
 impl fmt::Display for Record {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f,
-            "{}, {}, {}, {}, {}, {}, {}, {}",
+            "{},{},{},{},{},{},{},{}",
             self.number,
             self.from_amount,
             self.from_currency,
