@@ -3,7 +3,9 @@
 [Bull Bitcoin](https://bullbitcoin.com/) is a Canadian non-custodial bitcoin exchange. I used to be a customer, but abandoned the service because personal record-keeping and tax compliance is a pain.
 ## Motivation
 
-Bull Bitcoin offers a comically inflexible "Export my orders" button that gives you a so-called `.csv` file that has intractable problems.  Bull Bitcoin technical support has declined several written suggestions for data in a more reasonably interoperative. Even though I'm no longer a customer, I have rotten historical data from Bull Bitcoim to deal with.
+Bull Bitcoin offers a comically inflexible "Export my orders" button that gives you a so-called `.csv` file that has intractable problems.
+
+Bull Bitcoin support has declined written suggestions to make their data more interoperative.
 
 This repo contains the code I use to transform the garbage data into a format I can easily use in a spreadsheet.  In other words, this repo takes shitty data and makes a usable `.csv` file I can actually use.
 
@@ -22,7 +24,9 @@ In short,
 
 This is written in Rust.  At this stage you can clone this repo and call it with `cargo run` or with `cargo build` and invoking the binary from the `./target/debug/` folder.
 
-**Coming soon**: a proper binary file you can invoke conventionally from your MacOS, Linux, or Windows OS.
+**Coming soon**:
+* Convert timestamp values to ISO 8601 format.
+* A proper binary you can invoke conventionally from your MacOS, Linux, or Windows OS.
 
 ### Calling with `cargo run`
 
