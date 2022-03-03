@@ -30,7 +30,6 @@ In short,
 
 Still to do:
 
-* Convert timestamp values to ISO 8601 format. So `Mon Dec 07 2020 00:40:50 GMT+0000 (UTC)` would become `2020-12-07`.
 * A proper binary you can invoke conventionally from your MacOS, Linux, or Windows OS.
 
 ## Invocation (for now)
