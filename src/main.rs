@@ -4,6 +4,9 @@ use std::env;
 use std::error::Error;
 use std::ffi::OsString;
 use std::process;
+use std::fmt;
+use serde::Deserialize;
+use std::io;
 
 
 // [
@@ -16,7 +19,49 @@ use std::process;
 //     "created-at",
 //     "completed-at"
 // ]
-type Record = (i32, f64, String, f64, String, String, String, String);
+
+// type Record = (i32, f64, String, f64, String, String, String, String);
+
+#[derive(Debug, Deserialize)]
+struct Record {
+    #[serde(rename = "number")]
+    number: i32,
+    #[serde(rename = "from-amount")]
+    from_amount: f64,
+    #[serde(rename = "from-currency")]
+    from_currency: String,
+    #[serde(rename = "to-amount")]
+    to_amount: f64,
+    #[serde(rename = "to-currency")]
+    to_currency: String,
+    #[serde(rename = "payment-method")]
+    payment_method: String,
+    #[serde(rename = "created-at")]
+    created_at: String,
+    #[serde(rename = "completed-at")]
+    completed_at: String,
+}
+
+impl fmt::Display for Record {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        // Write strictly the first element into the supplied output
+        // stream: `f`. Returns `fmt::Result` which indicates whether the
+        // operation succeeded or failed. Note that `write!` uses syntax which
+        // is very similar to `println!`.
+        // "{}, {}, \"{}\", {}, \"{}\", \"{}\", \"{}\", \"{}\"",
+        write!(f,
+            "{}, {}, {}, {}, {}, {}, {}, {}",
+            self.number,
+            self.from_amount,
+            self.from_currency,
+            self.to_amount,
+            self.to_currency,
+            self.payment_method,
+            self.created_at,
+            self.completed_at
+        )
+    }
+}
 
 fn run() -> Result<(), Box<dyn Error>> {
     let file_path = get_first_arg()?;
@@ -25,18 +70,24 @@ fn run() -> Result<(), Box<dyn Error>> {
         .double_quote(false)
         .from_path(file_path)?;
 
+    let mut wtr = csv::Writer::from_writer(io::stdout());
+
     // the header line
     {
         // We nest this call in its own scope because of lifetimes.
         let headers = rdr.headers()?;
-        println!("{:?}", headers);
+        wtr.write_record(headers)?;
+        wtr.flush()?;
+        // println!("{:?}", headers);
     }
 
     // the data
     for result in rdr.deserialize() {
         let record: Record = result?;
-        println!("{:?}", record);
+        // wtr.write_record(record)?;
+        println!("{}", record);
     }
+    // wtr.flush()?;
     Ok(())
 }
 
