@@ -9,3 +9,4 @@ authors = ["Steven Black"]
 [dependencies]
 csv = "1"
 serde = { version = "1", features = ["derive"] }
+chrono = "0.4.19"

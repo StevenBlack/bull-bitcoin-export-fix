@@ -7,6 +7,7 @@ use std::process;
 use std::fmt;
 use serde::Deserialize;
 use std::io;
+use chrono::{DateTime, FixedOffset, TimeZone};
 
 
 // [
@@ -57,8 +58,8 @@ impl fmt::Display for Record {
             self.to_amount,
             self.to_currency,
             self.payment_method,
-            self.created_at,
-            self.completed_at
+            date_fix(&self.created_at),
+            date_fix(&self.completed_at),
         )
     }
 }
@@ -100,9 +101,42 @@ fn get_first_arg() -> Result<OsString, Box<dyn Error>> {
     }
 }
 
+fn date_fix(d: &str ) -> String {
+    // Sun Dec 13 2020 00:00:01 GMT+0000
+    let mo = match &d[4..7] {
+        // The arms of a match must cover all the possible values
+        "Jan" => "01",
+        "Feb" => "02",
+        "Mar" => "03",
+        "Apr" => "04",
+        "May" => "05",
+        "Jun" => "06",
+        "Jul" => "07",
+        "Aug" => "08",
+        "Sep" => "09",
+        "Oct" => "10",
+        "Nov" => "11",
+        "Dec" => "12",
+        _ => "99"
+        // TODO ^ Try commenting out one of these arms
+    };
+    format!("{}-{}-{}", d[11..15].to_string(), mo, d[8..10].to_string())
+}
+
+
 fn main() {
     if let Err(err) = run() {
         println!("{}", err);
         process::exit(1);
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn it_works() {
+        assert_eq!(date_fix("Sun Dec 13 2020 00:00:01 GMT+0000"), "2020-12-13".to_string() );
     }
 }
