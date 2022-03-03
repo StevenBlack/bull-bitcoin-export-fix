@@ -7,21 +7,6 @@ use std::process;
 use std::fmt;
 use serde::Deserialize;
 use std::io;
-use chrono::{DateTime, FixedOffset, TimeZone};
-
-
-// [
-//     "number",
-//     "from-amount",
-//     "from-currency",
-//     "to-amount",
-//     "to-currency",
-//     "payment-method",
-//     "created-at",
-//     "completed-at"
-// ]
-
-// type Record = (i32, f64, String, f64, String, String, String, String);
 
 #[derive(Debug, Deserialize)]
 struct Record {
@@ -45,11 +30,6 @@ struct Record {
 
 impl fmt::Display for Record {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        // Write strictly the first element into the supplied output
-        // stream: `f`. Returns `fmt::Result` which indicates whether the
-        // operation succeeded or failed. Note that `write!` uses syntax which
-        // is very similar to `println!`.
-        // "{}, {}, \"{}\", {}, \"{}\", \"{}\", \"{}\", \"{}\"",
         write!(f,
             "{}, {}, {}, {}, {}, {}, {}, {}",
             self.number,
@@ -102,9 +82,9 @@ fn get_first_arg() -> Result<OsString, Box<dyn Error>> {
 }
 
 fn date_fix(d: &str ) -> String {
-    // Sun Dec 13 2020 00:00:01 GMT+0000
+    // d looks like this:
+    // "Sun Dec 13 2020 00:00:01 GMT+0000 (UTC)"
     let mo = match &d[4..7] {
-        // The arms of a match must cover all the possible values
         "Jan" => "01",
         "Feb" => "02",
         "Mar" => "03",
@@ -118,7 +98,6 @@ fn date_fix(d: &str ) -> String {
         "Nov" => "11",
         "Dec" => "12",
         _ => "99"
-        // TODO ^ Try commenting out one of these arms
     };
     format!("{}-{}-{}", d[11..15].to_string(), mo, d[8..10].to_string())
 }
@@ -136,7 +115,8 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
-        assert_eq!(date_fix("Sun Dec 13 2020 00:00:01 GMT+0000"), "2020-12-13".to_string() );
+    fn test_date_fix() {
+        assert_eq!(date_fix("Sun Dec 13 2020 00:00:01 GMT+0000 (UTC)"), "2020-12-13".to_string() );
+        assert_eq!(date_fix("Tue Mar 02 2021 02:33:43 GMT+0000 (UTC)"), "2021-03-02".to_string() );
     }
 }
