@@ -31,14 +31,15 @@ struct Record {
 impl fmt::Display for Record {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f,
-            "{}, {}, {}, {}, {}, {}, {}",
-            date_fix(&self.completed_at),
+            "{}, {}, {}, {}, {}, {}, {}, {}",
             self.number,
             self.from_amount,
             self.from_currency,
             self.to_amount,
             self.to_currency,
             self.payment_method,
+            date_fix(&self.created_at),
+            date_fix(&self.completed_at),
         )
     }
 }
