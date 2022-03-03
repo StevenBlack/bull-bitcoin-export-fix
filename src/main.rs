@@ -5,6 +5,19 @@ use std::error::Error;
 use std::ffi::OsString;
 use std::process;
 
+
+// [
+//     "number",
+//     "from-amount",
+//     "from-currency",
+//     "to-amount",
+//     "to-currency",
+//     "payment-method",
+//     "created-at",
+//     "completed-at"
+// ]
+type Record = (i32, f64, String, f64, String, String, String, String);
+
 fn run() -> Result<(), Box<dyn Error>> {
     let file_path = get_first_arg()?;
     let mut rdr = csv::ReaderBuilder::new()
@@ -20,8 +33,8 @@ fn run() -> Result<(), Box<dyn Error>> {
     }
 
     // the data
-    for result in rdr.records() {
-        let record = result?;
+    for result in rdr.deserialize() {
+        let record: Record = result?;
         println!("{:?}", record);
     }
     Ok(())
