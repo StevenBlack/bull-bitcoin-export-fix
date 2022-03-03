@@ -12,10 +12,10 @@ Fixing Bull Bitcoin's comically awful csv exports
 This presumes the so-called "`.csv`" file is named `bull-bitcoin-orders.csv` in the local `~/Downloads` folder.
 
 ```
-cargo run -- cargo run --  < ~/Downloads/bull-bitcoin-orders.csv
+cargo run -- cargo run -- ~/Downloads/bull-bitcoin-orders.csv
 ```
 ### Calling the debug binary:
 
 ```
-./target/debug/bull-bitcoin-export-fix < ~/Downloads/bull-bitcoin-orders.csv
+./target/debug/bull-bitcoin-export-fix ~/Downloads/bull-bitcoin-orders.csv
 ```
