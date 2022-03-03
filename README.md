@@ -21,13 +21,15 @@ In short,
 **Therefore**
 * The Bull Bitcoin `.csv` file can't be directly imported to any standard spreadsheet or database, and everything about this raw data is a pain.
 
+## Coming soon
+
+Still to do:
+
+* Convert timestamp values to ISO 8601 format.
+* A proper binary you can invoke conventionally from your MacOS, Linux, or Windows OS.
 ## Invocation (for now)
 
 This is written in Rust.  At this stage you can clone this repo and call it with `cargo run` or with `cargo build` and invoking the binary from the `./target/debug/` folder.
-
-**Coming soon**:
-* Convert timestamp values to ISO 8601 format.
-* A proper binary you can invoke conventionally from your MacOS, Linux, or Windows OS.
 
 ### Calling with `cargo run`
 
