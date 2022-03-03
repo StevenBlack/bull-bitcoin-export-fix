@@ -1,13 +1,14 @@
 # 🙄 bull-bitcoin-export-fix
 
-[Bull Bitcoin](https://bullbitcoin.com/) is a Canadian non-custodial bitcoin exchange. I used to be a customer, but abandoned the service because personal record-keeping and tax compliance is a pain.
+[Bull Bitcoin](https://bullbitcoin.com/) is a Canadian non-custodial bitcoin exchange. I used to be a customer, but abandoned the service because personal record-keeping and tax compliance is a pain — their data exports are garbage.
+
 ## Motivation
 
 Bull Bitcoin offers a comically inflexible "Export my orders" button that gives you a so-called `.csv` file that has intractable problems.
 
 Bull Bitcoin support has declined written suggestions to make their data more interoperative.
 
-This repo contains the code I use to transform the garbage data into a format I can easily use in a spreadsheet.  In other words, this repo takes shitty data and makes a usable `.csv` file I can actually use.
+This repo contains the code I use to transform their garbage data into a format I import into a spreadsheet.  In other words, this repo takes shitty data and makes a usable `.csv` file I can actually use.
 
 ### Specific problems with the Bull Bitcoin CSV files
 
