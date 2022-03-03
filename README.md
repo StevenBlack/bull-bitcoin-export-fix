@@ -17,10 +17,6 @@ In short,
 * It's not a `.csv` file that's anything like [what you might expect](https://en.wikipedia.org/wiki/Comma-separated_values).
 * The Bull Bitcoin `.csv` file's timestamp columns aren't [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant, so parsing dates from the data is a pain in the ass. A Bull Bitcoin timestamp value looks like this: `Mon Dec 07 2020 09:31:21 GMT+0000 (UTC)` which appears to be from [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) which has no support in all desktop spreadsheets I've tried.  Good luck with that.
 
-
-![2022-03-03_00-20-11](https://user-images.githubusercontent.com/80144/156501708-b30a0dc3-bad5-4093-a72f-86e35484cee3.png)
-
-
 * Basically the Bull Bitcoin `.csv` file is a minimum effort, give-zero-shits text dump from a database upon which they've slapped a `.csv` file extension.  If you're familiar with PostgreSQL, think [`pg_dump`](https://www.postgresql.org/docs/14/app-pgdump.html) — that's what they effectively give you, from whatever database Bull Bitcoin uses.
 
 **Therefore**
