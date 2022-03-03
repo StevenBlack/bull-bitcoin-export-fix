@@ -15,7 +15,12 @@ This repo contains the code I use to transform their garbage data into a format 
 In short,
 * It's not a `.csv` file according to the [CSV, Comma Separated Values (RFC 4180) spec](https://datatracker.ietf.org/doc/html/rfc4180).
 * It's not a `.csv` file that's anything like [what you might expect](https://en.wikipedia.org/wiki/Comma-separated_values).
-* The Bull Bitcoin `.csv` file's timestamp columns aren't [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant, so parsing dates from the data is a pain in the ass.
+* The Bull Bitcoin `.csv` file's timestamp columns aren't [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) compliant, so parsing dates from the data is a pain in the ass. A Bull Bitcoin timestamp value looks like this: `Mon Dec 07 2020 09:31:21 GMT+0000 (UTC)` which appears to be from [RFC 5322](https://datatracker.ietf.org/doc/html/rfc5322) which has no support in all desktop spreadsheets I've tried.  Good luck with that.
+
+
+![2022-03-03_00-20-11](https://user-images.githubusercontent.com/80144/156501708-b30a0dc3-bad5-4093-a72f-86e35484cee3.png)
+
+
 * Basically the Bull Bitcoin `.csv` file is a minimum effort, give-zero-shits text dump from a database upon which they've slapped a `.csv` file extension.  If you're familiar with PostgreSQL, think [`pg_dump`](https://www.postgresql.org/docs/14/app-pgdump.html) — that's what they effectively give you, from whatever database Bull Bitcoin uses.
 
 **Therefore**
@@ -25,8 +30,9 @@ In short,
 
 Still to do:
 
-* Convert timestamp values to ISO 8601 format.
+* Convert timestamp values to ISO 8601 format. So `Mon Dec 07 2020 00:40:50 GMT+0000 (UTC)` would become `2020-12-07`.
 * A proper binary you can invoke conventionally from your MacOS, Linux, or Windows OS.
+
 ## Invocation (for now)
 
 This is written in Rust.  At this stage you can clone this repo and call it with `cargo run` or with `cargo build` and invoking the binary from the `./target/debug/` folder.
