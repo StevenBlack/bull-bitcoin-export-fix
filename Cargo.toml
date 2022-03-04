@@ -1,10 +1,16 @@
 [package]
 name = "bull-bitcoin-export-fix"
-version = "0.1.0"
+version = "1.0.0"
+authors = ["Steven Black <steveb@stevenblack.com>"]
+description = """
+Bull Bitcoin offers a comically inflexible "Export my orders" button that gives you a so-called .csv file that has intractable problems. Bull Bitcoin support has declined written suggestions to make their data more interoperative. This repo contains the code I use to transform their garbage data into a format I import into a spreadsheet. In other words, this repo takes shitty data and makes a usable .csv file I can actually use.
+"""
+homepage = "https://github.com/StevenBlack/bull-bitcoin-export-fix"
+repository = "https://github.com/StevenBlack/bull-bitcoin-export-fix"
+keywords = ["rust", "canada", "csv-parser", "remediation", "tax-compliance", "bull-bitcoin", "remediation"]
+categories = ["command-line-utilities", "text-processing", "csv"]
+license = "MIT"
 edition = "2021"
-authors = ["Steven Black"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 csv = "1"
