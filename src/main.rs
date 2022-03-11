@@ -30,16 +30,39 @@ struct Record {
 
 impl fmt::Display for Record {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let trans = if self.from_currency == "CAD" {
+            "Buy"
+        } else {
+            "Sell"
+        };
+        let coins = if trans == "Buy" {
+            self.to_amount
+        } else {
+            self.from_amount
+        };
+        let can_dollars_per_coin = if trans == "Buy" {
+            (self.from_amount / coins * 100f64).floor() / 100.0
+        } else {
+            (self.to_amount / coins * 100f64).floor() / 100.0
+        };
+        let fee = if trans == "Buy" {
+            (coins * can_dollars_per_coin * 0.021 * 100f64).floor() / 100.0
+        } else {
+            (coins * can_dollars_per_coin * 0.013 * 100f64).floor() / 100.0
+        };
         write!(f,
-            "{},{},{},{},{},{},{},{}",
-            self.number,
+            "{},{},{}, ,{}, , ,{},{},{},{},{},{},Bull Bitcoin #{}",
+            date_fix(&self.completed_at),
+            trans,
+            coins,
+            can_dollars_per_coin,
+            fee,
             self.from_amount,
             self.from_currency,
             self.to_amount,
             self.to_currency,
             self.payment_method,
-            date_fix(&self.created_at),
-            date_fix(&self.completed_at),
+            self.number,
         )
     }
 }
@@ -54,7 +77,7 @@ fn run() -> Result<(), Box<dyn Error>> {
     let mut wtr = csv::Writer::from_writer(io::stdout());
 
     // the header line
-    {
+    if false {
         // We nest this call in its own scope because of lifetimes.
         let headers = rdr.headers()?;
         wtr.write_record(headers)?;
@@ -65,8 +88,10 @@ fn run() -> Result<(), Box<dyn Error>> {
     // the data
     for result in rdr.deserialize() {
         let record: Record = result?;
-        // wtr.write_record(record)?;
-        println!("{}", record);
+        if record.payment_method != "Interac e-Transfer" {
+            // wtr.write_record(record)?;
+            println!("{}", record);
+        }
     }
     // wtr.flush()?;
     Ok(())
@@ -101,7 +126,6 @@ fn date_fix(d: &str ) -> String {
     };
     format!("{}-{}-{}", d[11..15].to_string(), mo, d[8..10].to_string())
 }
-
 
 fn main() {
     if let Err(err) = run() {
